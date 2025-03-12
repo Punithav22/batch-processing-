@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Filet</title>
+    <style>
+       body {
+        background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjWB5SueCt5ysGgqwCrVQYhFcjWS4ir0i4ow&s');
+        background-size: cover; /* Ensures the image covers the screen */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed; /* Keeps the image fixed while scrolling */
+    }
+
+    form {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+a {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 18px;
+    text-decoration: none;
+    color: #010203;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+    </style>
+
+</head>
+<body >
+     <h2>Upload CSV File</h2>
+    
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+
+    <br>
+    <a href="{% url 'data_list' %}">📊 View Processed Data</a>
+</body>
+</html>

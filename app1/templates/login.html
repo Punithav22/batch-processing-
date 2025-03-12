@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            height: 100vh;
+            margin: 0;
+            background-image: url('https://w0.peakpx.com/wallpaper/213/560/HD-wallpaper-blue-neon-background-blue-waves-background-abstract-blue-backgrounds-creative-blue-abstraction.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .container {
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .box {
+            background-image: url('https://t4.ftcdn.net/jpg/01/19/11/55/360_F_119115529_mEnw3lGpLdlDkfLgRcVSbFRuVl6sMDty.jpg');
+            /* background-color: rgba(221, 160, 221, 0.9); */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            width: 300px;
+            height: 250px;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: white;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input {
+            margin: 0 auto;
+            width: 250px;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid black;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px;
+            background-color: #ee0505;
+            color: #fff;
+            font-size: 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: auto; 
+            margin: 0 auto; 
+            display: block; 
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box" >
+            <h1>Login</h1>
+            <br/>
+            <form>
+                <input type="text" name="username" placeholder="Username" />
+                <input type="password" name="password" placeholder="Password" />
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uploaded Files List</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .delete-btn:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Uploaded Files</h2>
+
+        <!-- Bulk Delete Form with DataTable -->
+        <form method="POST" action="{% url 'bulk_delete' %}">
+            {% csrf_token %}
+            <table id="fileTable" class="display">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="select-all"></th>
+                        <th>File Name</th>
+                        <th>Uploaded At</th>
+                        <th>Field 1</th>
+                        <th>Field 2</th>
+                        <th>Field 3</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for file in uploaded_files %}
+                    <tr>
+                        <td><input type="checkbox" name="selected_ids" value="{{ file.id }}"></td>
+                        <td>{{ file.file.name }}</td>
+                        <td>{{ file.uploaded_at }}</td>
+                        <td>{{ file.field1 }}</td>
+                        <td>{{ file.field2 }}</td>
+                        <td>{{ file.field3 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete selected records?')">
+                Delete Selected
+            </button>
+        </form>
+    </div>
+
+    <script>
+        // Initialize DataTable
+        $(document).ready(function() {
+            $('#fileTable').DataTable();
+        });
+
+        // Select All Checkbox Functionality
+        document.getElementById("select-all").addEventListener("click", function() {
+            let checkboxes = document.querySelectorAll("input[name='selected_ids']");
+            checkboxes.forEach(cb => cb.checked = this.checked);
+        });
+    </script>
+
+</body>
+</html>

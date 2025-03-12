@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .btn-success {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+}
+.btn-success:hover {
+    background-color: #218838;
+}
+
+    </style>
+</head>
+<body>
+    <!-- <h2>Batch Processing Completed Successfully</h2>
+    <a href="{% url 'upload_file' %}">Upload More Files</a> -->
+
+    <h2>Batch Processing Completed</h2>
+
+{% for message in results %}
+    <p>{{ message }}</p>
+{% endfor %}
+
+<h3>Download Processed Files</h3>
+{% if processed_files %}
+    <ul>
+        {% for file in processed_files %}
+            <li>
+                {{ file.file.name }}  
+                <a href="{% url 'export_processed_data' file.id %}" class="btn btn-success">📤 Download</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No processed files available for download.</p>
+{% endif %}
+
+    
+    <a href="{% url 'export_csv' %}" class="btn btn-primary">📤 Export Data as CSV</a>
+
+
+
+</body>
+</html>
