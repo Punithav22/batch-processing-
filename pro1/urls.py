@@ -18,10 +18,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('', include('app2.urls')),
-    #  path('',include ('batch.urls')), 
     path('',include ('batch1.urls')), 
-    # path('',include ('batch1ussql.urls')), 
+   
 ]
 
 
