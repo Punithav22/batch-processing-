@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,88 +8,134 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+        html, body {
+            /* height: 100%; */
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            
         }
-
+        
         .container {
-            max-width: 800px;
-            background: #fff;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .container:hover {
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
-        }
-
-        h2 {
-            color: #28a745;
-            margin-bottom: 10px;
-        }
-
-        .success-icon {
-            font-size: 60px;
-            color: #28a745;
-            margin-bottom: 10px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-
-        th, td {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
+             width: calc(100% - 192px); /* 2 inches on each side */
+             max-width: 150%; /* Cap the width for large screens */
+             height: auto;
+             margin: 0 auto; /*Center the container */
+             margin-left: 80px;
+             margin-bottom: 40px;
+             margin-top: 30px;
+             display: flex;
+             flex-direction: column;
+             justify-content: flex-start;
+             align-items: center;
+             padding: 20px;
+             background: #f9f9f9;
+             border-radius: 10px;
+             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+             box-sizing: border-box;
+            }
+            .table-container {
+                flex-grow: 1;
+                width: 100%;
+                max-width: 1000px; /* Caps width on large screens */
+                min-width: 300px; /* Ensures it's not too narrow on small screens */
+                overflow-y: auto;
+                max-height: calc(100vh - 400px);
+                border: 1px solid #ddd;
+                border-radius: 12px;
+                background: #fff;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 10px; /* Slight padding for breathing room */
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Softer shadow */
+                box-sizing: border-box;
+            }
+            /* Make sure the table itself adapts nicely */
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 0.9rem;
+                table-layout: fixed; /* Prevents squishing on narrow views */
+            }
+            
+            /* Ensure headers stay visible on scroll */
+            .table-responsive thead th {
+                position: sticky;
+                top: 0;
+                background-color: #343a40;
+                color: #fff;
+                z-index: 10;
+            }
+           th {
+            position: sticky;
+            top: 0;
             background-color: #007bff;
             color: white;
-            text-transform: uppercase;
-        }
+            z-index: 1;
+           }
 
-        tr:hover {
-            background-color: #f1f1f1;
-            transition: all 0.2s ease-in-out;
-        }
-
-        .btn-custom {
-            margin: 5px;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .btn-custom:hover {
-            transform: scale(1.05);
+        .search-container {
+            display: flex;
+            justify-content: center;
+            width: 50%;
+            margin-bottom: 15px;
         }
 
         .search-container input {
             width: 100%;
-            padding: 10px 40px 10px 10px;
-            margin-bottom: 15px;
+            padding: 8px 30px 8px 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            background: url('https://cdn-icons-png.flaticon.com/512/622/622669.png') no-repeat right 10px center;
-            background-size: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Centered Insert Row Button */
+        .insert-btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .bulk-delete-container {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .table-container {
+                max-height: calc(100vh - 300px);
+                width: 100%;
+            }
+
+            table th, table td {
+                padding: 5px;
+                font-size: 0.8rem;
+            }
+
+            .search-container {
+                width: 50%;
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <i class="fas fa-check-circle success-icon"></i>
-        <h2>Upload Successful!</h2>
+        <h2 style="color: green;">Upload Successful!</h2>
         <p>Your file has been successfully uploaded.</p>
 
+        <!-- Insert Row Form -->
         <form action="{% url 'insert_row' %}" method="post" class="mb-4">
             {% csrf_token %}
             <div class="row">
@@ -102,71 +149,104 @@
                     <input type="text" name="field3" class="form-control" placeholder="Enter Field 3" required>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary mt-3 btn-custom">Insert Row</button>
+            <div class="insert-btn-container">
+                <button type="submit" class="btn btn-primary mt-3 btn-custom">Insert Row</button>
+            </div>
         </form>
 
+        <!-- Search Bar -->
         <div class="search-container">
             <input type="text" id="search" class="form-control" onkeyup="filterTable()" placeholder="Search for entries...">
         </div>
 
-        <form method="POST" action="{% url 'bulk_delete' %}">
-            {% csrf_token %}
-            <table class="table table-hover mt-3">
-                <thead>
-                    <tr>
-                        <th><input type="checkbox" id="select-all"></th>
-                        <th>Field 1</th>
-                        <th>Field 2</th>
-                        <th>Field 3</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for row in data %}
-                    <tr>
-                        <td><input type="checkbox" name="selected_ids" value="{{ row.id }}"></td>
-                        <td>{{ row.field1 }}</td>
-                        <td>{{ row.field2 }}</td>
-                        <td>{{ row.field3 }}</td>
-                        <td>
-                            <a href="{% url 'edit_row' row.id %}" class="btn btn-primary btn-sm btn-custom">✏️</a>
-                            <a href="{% url 'delete_row' row.id %}" class="btn btn-danger btn-sm btn-custom" onclick="return confirm('Are you sure you want to delete this row?')">🗑️</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <input type="hidden" name="selected_ids" id="bulk-selected-ids">
+        <!-- Data Table -->
+        <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+            <form method="POST" action="{% url 'bulk_delete' %}">
+                {% csrf_token %}
+                <table class="table table-hover mt-3 table table-striped table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th><input type="checkbox" id="select-all"></th>
+                            <th>Field 1</th>
+                            <th>Field 2</th>
+                            <th>Field 3</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in data %}
+                        <tr>
+                            <td><input type="checkbox" name="selected_ids" value="{{ row.id }}"></td>
+                            <td>{{ row.field1 }}</td>
+                            <td>{{ row.field2 }}</td>
+                            <td>{{ row.field3 }}</td>
+                            <td>
+                                <a href="{% url 'edit_row' row.id %}?page={{ data.number }}" class="btn btn-primary btn-sm btn-custom">✏️</a>
+                                <a href="{% url 'delete_row' row.id %}?page={{ data.number }}" class="btn btn-danger btn-sm btn-custom" onclick="return confirm('Are you sure you want to delete this row?')">🗑️</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <input type="hidden" name="selected_ids" id="bulk-selected-ids">
+            </form>
+        </div>
+
+        <!-- Bulk Delete Button Outside Table -->
+        <div class="bulk-delete-container">
             <button type="submit" class="btn btn-danger btn-custom" onclick="prepareBulkDelete()">🗑️ Bulk Delete</button>
-        </form>
+        </div>
 
-        <script>
-            document.getElementById("select-all").addEventListener("click", function() {
-                let checkboxes = document.querySelectorAll("input[name='selected_ids']");
-                checkboxes.forEach(cb => cb.checked = this.checked);
-            });
+        <!-- Pagination Controls -->
+        <div class="pagination mt-3">
+            <span class="step-links">
+                {% if data.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ data.previous_page_number }}">previous</a>
+                {% endif %}
 
-            function prepareBulkDelete() {
-                let selectedRows = Array.from(document.querySelectorAll("input[name='selected_ids']:checked"))
-                    .map(cb => cb.value)
-                    .join(",");
-                document.getElementById("bulk-selected-ids").value = selectedRows;
-            }
+                <span class="current">
+                    Page {{ data.number }} of {{ data.paginator.num_pages }}
+                </span>
 
-            function filterTable() {
-                let input = document.getElementById("search").value.toLowerCase();
-                let rows = document.querySelectorAll("tbody tr");
-                rows.forEach(row => {
-                    let text = row.textContent.toLowerCase();
-                    row.style.display = text.includes(input) ? "" : "none";
-                });
-            }
-        </script>
+                {% if data.has_next %}
+                    <a href="?page={{ data.next_page_number }}">next</a>
+                    <a href="?page={{ data.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
 
+        <!-- Buttons -->
         <div class="buttons mt-4">
             <a href="{% url 'upload_file' %}" class="btn btn-success btn-custom">📤 Upload Another File</a>
             <a href="{% url 'download_csv' %}" class="btn btn-warning btn-custom">📥 Download as CSV</a>
         </div>
     </div>
+
+    <!-- JavaScript -->
+    <script>
+        document.getElementById("select-all").addEventListener("click", function() {
+            let checkboxes = document.querySelectorAll("input[name='selected_ids']");
+            checkboxes.forEach(cb => cb.checked = this.checked);
+        });
+
+        function prepareBulkDelete() {
+            let selectedRows = Array.from(document.querySelectorAll("input[name='selected_ids']:checked"))
+                .map(cb => cb.value)
+                .join(",");
+            document.getElementById("bulk-selected-ids").value = selectedRows;
+        }
+
+        function filterTable() {
+            let input = document.getElementById("search").value.toLowerCase();
+            let rows = document.querySelectorAll("tbody tr");
+            rows.forEach(row => {
+                let text = row.textContent.toLowerCase();
+                row.style.display = text.includes(input) ? "" : "none";
+            });
+        }
+    </script>
+
 </body>
+
 </html>

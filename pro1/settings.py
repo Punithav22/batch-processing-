@@ -76,22 +76,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'pro1.urls'
 
-# TEMPLATES = [
-#     {
-#         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-#         'DIRS': [],
-#         'APP_DIRS': True,
-#         'OPTIONS': {
-#             'context_processors': [
-#                 'django.template.context_processors.debug',
-#                 'django.template.context_processors.request',
-#                 'django.contrib.auth.context_processors.auth',
-#                 'django.contrib.messages.context_processors.messages',
-#             ],
-#         },
-#     },
-# ]
-
 WSGI_APPLICATION = 'pro1.wsgi.application'
 
 
@@ -99,22 +83,17 @@ WSGI_APPLICATION = 'pro1.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': 'ad',
-#         'USER':'root',
-#         'PASSWORD':'89250%Vp',
-#         'HOST':'localhost',
-#         'PORT':'3306',
-#     }
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / "db.sqlite3",
+        'NAME': 'mysql_dump',
+        'USER':'root',
+        'PASSWORD':'89250%Vp',
+        'HOST':'localhost',
+        'PORT':'3306',
     }
 }
+
 
 
 
